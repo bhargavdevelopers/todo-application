@@ -108,18 +108,18 @@ app.get("/todos/:todoId/", async (request, response) => {
 //POST todo API
 app.post("/todos/", async (request, response) => {
   const todoDetails = request.body;
-  const { todo, priority, status } = todoDetails;
+  const { id, todo, priority, status } = todoDetails;
   const addTodoQuery = `
     INSERT INTO
-      todo (todo, priority, status)
+      todo (id, todo, priority, status)
     VALUES
       (
+          ${id},
          '${todo}',
           '${priority}',
           '${status}'
       );`;
   const dbResponse = await db.run(addTodoQuery);
-  const id = dbResponse.lastID;
   response.send("Todo Successfully Added");
 });
 
